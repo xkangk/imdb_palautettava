@@ -13,7 +13,7 @@
     ON titles.title_id = title_genres.title_id
     INNER JOIN title_ratings ON title_genres.title_id = title_ratings.title_id
     WHERE genre LIKE '%" . $genre . "%'
-    AND num_votes > 10000
+    AND num_votes > 50000
     AND average_rating > 8
     GROUP BY `primary_title`
     ORDER BY `average_rating` DESC

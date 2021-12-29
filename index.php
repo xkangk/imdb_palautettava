@@ -1,12 +1,13 @@
 <?php 
 require_once("functions.php");
     //Hakukriteerit
-    $html = "<h2>Criteria</h2>";
+    $html = "<h2>Kriteerit</h2>";
     $html .="<form action='GET'>";
-        //Alue-Pudotusvalikko
-        $html .=createGenreDropDown();
+
         //Title_typepudotusvalikko
-    $html .=createTitle_typeDropDown();
+    $html .='Valitse, minkä kategorian 10 pisintä otsikkoa haluat nähdä <p>' . createTitle_typeDropDown();
+            //Alue-Pudotusvalikko
+            $html .='<p>Valitse, minkä genren  top äänestetyt otsikot haluat nähdä </p>' .createGenreDropDown() . '<p>';
 
 
     //Looppaa läpi tiedstot datasets-hakemistosta
@@ -18,7 +19,7 @@ require_once("functions.php");
             $html .= '<div><input type="submit" value="' 
             . basename($file, ".php") .
              '" formaction="' . $path . "/" 
-             . $file . '"></div>';
+             . $file . '"> </div>';
         }
         closedir($handle);
     }
