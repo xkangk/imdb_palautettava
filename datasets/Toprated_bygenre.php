@@ -4,9 +4,11 @@
 
     //Lue genre get-parametri muuttujaan
     $genre = $_GET["genre"];
-    $conn = createDbConnection(); //Kutsutaan db.php tiedostossa olevaa CreateDbConnection()-functiota, joka avaa tietokantayhteyden
-    //Muodosta SQL-lause
+    //Kutsutaan db.php tiedostossa olevaa CreateDbConnection()-functiota, joka avaa tietokantayhteyden
+    $conn = createDbConnection(); 
 
+    //Muodostetaan SQL-lause, jossa haetaan genren mukaan yli 50 000 
+    // ääntä saanutta ohjelmaa ja joiden keskiarvo on yli 8.
     $sql = "SELECT primary_title, genre, title_type, num_votes,average_rating
     FROM `titles` 
     INNER JOIN title_genres
@@ -19,12 +21,10 @@
     ORDER BY `average_rating` DESC
     LIMIT 10;";
 
-    //muodosta SQL lause
+
     //Tarkistukset yms
-    //Aja kysely kantaan
-
-
     $prepare = $conn->prepare($sql);
+    //Aja kysely kantaan
     $prepare->execute();
     //Tallennetaan vastaus muuttujaan
     $rows = $prepare->fetchAll();
@@ -35,8 +35,9 @@
     //Looppaa tietokannasta saadut rivit läpi
     foreach($rows as $rows) {
         //Tulosta jokaiselle riville li-elementti
-        $html .="<li>" . $rows["primary_title"] . "</li>";
+        $html .="<li>" . $rows["primary_title"] ." <br><b>Votes:</b> " . $rows["num_votes"] . "<br><b>Score:</b> " . $rows["average_rating"] . "<p>" .  "</li>";
     }
+    //Suljetaan ul elementti
     $html .= "</ul>";
+    //Tulostetaan 
     echo $html;
-?>

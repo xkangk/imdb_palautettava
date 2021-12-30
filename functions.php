@@ -29,62 +29,31 @@ function createTitle_typeDropDown()
 
 //Functio joka luo Genre pudotusvalikon
 function createGenreDropDown()
-{
-    require_once("db.php"); //ota db.php tiedosto käyttöön tässä tiedostossa
-    $conn = createDbConnection(); //Kutsutaan db.php tiedostossa olevaa CreateDbConnection()-functiota, joka avaa tietokantayhteyden
+{ //ota db.php tiedosto käyttöön tässä tiedostossa
+    require_once("db.php");
+    //Kutsutaan db.php tiedostossa olevaa CreateDbConnection()-functiota, joka avaa tietokantayhteyden
+    $conn = createDbConnection();
     //Muodosta SQL-lause
     $sql = "SELECT DISTINCT genre FROM `title_genres`;";
 
-    //Tarkistukset yms
-    //Aja kysely kantaan
 
+
+    //Tarkistukset yms
 
     $prepare = $conn->prepare($sql);
+    //Aja kysely kantaan
     $prepare->execute();
     //Tallennetaan vastaus muuttujaan
     $rows = $prepare->fetchAll();
     //Tulosta otsikko
     $html = "<select name='genre'>";
     //Looppaa tietokannasta saadut rivit läpi
-    foreach($rows as $rows) {
+    foreach ($rows as $rows) {
         //Tulosta jokaiselle riville li-elementti
-        $html .="<option>" . $rows["genre"] . "</option>";
+        $html .= "<option>" . $rows["genre"] . "</option>";
     }
-    $html .= "</select>";
-    return $html;
-    //Avataan tietokantayhteys
-    //Muodostetaan sql-lause
-    //Ajetaan sql lause kantaan
-    //Avataan select-elementti
-    //Loopataan läpi vastauksena saadut rivit
-    //Luodaan jokaiselle riville option-elementti
     //Suljetaan select-elementti
-    //Palautetaan luoto html kutsujalle
-}
-/* 
-    //Otetaan yhteys tietokantaan
-    require_once("db.php");
-    $conn = createDbConnection();
-    //Muodostetaan SQL-lause
-    $sql = "SELECT DISTINCT genre FROM `title_genres`;";
-    //Ajetaan SQL lause kantaan
-    $prepare = $conn->prepare($sql);
-    $prepare->execute();
-    //Tallennetaan vastaus muuttujaan
-    $rows = $prepare->fetchAll();
-    //Avataan select elementti
-    $html = '<select name="genre">';
-    //Loopataan läpi vastaukset
-    foreach ($rows as $row) {
-        //Luodaan jokaiselle riville option-element
-
-        $html .= "<option>" . $row["genre"] . "</option>";
-    }
-    //Suljetaan select elementti
     $html .= "</select>";
-    //Palautetaan luotu html kutsujalle
+    //Palautetaan luoto html kutsujalle
     return $html;
 }
-
-
- */
